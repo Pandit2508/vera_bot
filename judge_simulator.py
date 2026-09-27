@@ -21,16 +21,16 @@ Author: magicpin AI Challenge Team
 # =============================================================================
 
 # Your bot's URL (where your bot is running)
-BOT_URL = "http://localhost:8080"
+BOT_URL = "https://vera-bot-3lrt.onrender.com"
 
 # Choose your LLM provider: "openai", "anthropic", "gemini", "deepseek", "groq", "ollama", "openrouter"
-LLM_PROVIDER = "openai"
+LLM_PROVIDER = "groq"
 
 # Your API key (paste your key here)
-LLM_API_KEY = ""  # <-- PUT YOUR API KEY HERE
+LLM_API_KEY = ""  # <-- PUT YOUR GROQ API KEY HERE
 
 # Model to use (leave empty for default, or specify like "gpt-4o", "claude-3-5-sonnet-20241022", etc.)
-LLM_MODEL = ""  # <-- Optional: specify model or leave empty for default
+LLM_MODEL = "openai/gpt-oss-120b"  # <-- Optional: specify model or leave empty for default
 
 # For Ollama only: local server URL
 OLLAMA_URL = "http://localhost:11434"
@@ -271,7 +271,8 @@ class GroqProvider(LLMProvider):
             "https://api.groq.com/openai/v1/chat/completions",
             data=json.dumps({"model": self.model, "messages": messages,
                             "temperature": 0.2, "max_tokens": 1500}).encode("utf-8"),
-            headers={"Authorization": f"Bearer {self.api_key}", "Content-Type": "application/json"}
+            headers={"Authorization": f"Bearer {self.api_key}", "Content-Type": "application/json",
+                    "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36"}
         )
         resp = urlrequest.urlopen(req, timeout=TIMEOUT_LLM)
         data = json.loads(resp.read().decode("utf-8"))
