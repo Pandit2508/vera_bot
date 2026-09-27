@@ -16,6 +16,8 @@ That's it!
 Author: magicpin AI Challenge Team
 """
 
+import os  # needed here so the env var lookup below works
+
 # =============================================================================
 # ██████  CONFIGURATION - EDIT THIS SECTION ██████
 # =============================================================================
@@ -26,8 +28,9 @@ BOT_URL = "https://vera-bot-3lrt.onrender.com"
 # Choose your LLM provider: "openai", "anthropic", "gemini", "deepseek", "groq", "ollama", "openrouter"
 LLM_PROVIDER = "groq"
 
-# Your API key (paste your key here)
-LLM_API_KEY = ""  # <-- PUT YOUR GROQ API KEY HERE
+# Your API key — reads from the GROQ_API_KEY environment variable, so the
+# real key never has to be typed into this file (and can't get committed by accident).
+LLM_API_KEY = os.environ.get("GROQ_API_KEY", "")
 
 # Model to use (leave empty for default, or specify like "gpt-4o", "claude-3-5-sonnet-20241022", etc.)
 LLM_MODEL = "openai/gpt-oss-120b"  # <-- Optional: specify model or leave empty for default
